@@ -20,7 +20,7 @@ const windowContents = {
             <span className="text-base ">GitHub</span>
           </a>
           <a href="#" className="flex flex-col items-center transform hover:scale-110 duration-200">
-            <img src="https://i.pinimg.com/736x/66/ec/50/66ec504c3993555a11df44c9d79d641f.jpg" alt="linkedin img" className="h-16 w-16 mb-2  transition-transform duration-200" />
+            <img src="https://static.vecteezy.com/system/resources/previews/018/930/585/non_2x/linkedin-logo-linkedin-icon-transparent-free-png.png" alt="linkedin img" className="h-16 w-16 mb-2  transition-transform duration-200" />
             <span className="text-base ">LinkedIn</span>
           </a>
         </div>
@@ -148,7 +148,7 @@ function App() {
                 <span className="text-sm">links</span>
               </button>
               <button className="flex flex-col items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors w-24 transform hover:scale-110 duration-200" onClick={() => openWindow('contato')}>
-                <img src="https://png.pngtree.com/png-vector/20190129/ourmid/pngtree-email-vector-icon-png-image_355828.jpg" alt="contact img" className="h-12 w-12 mb-1 rounded transition-transform duration-200" />
+                <img src="https://th.bing.com/th/id/R.3ea5d09ed6d30dbf6f1f4871e5e4c788?rik=eup%2fip%2b%2bPb5cTA&riu=http%3a%2f%2fwww.iconninja.com%2ffiles%2f251%2f835%2f636%2fblack-email-icon.png&ehk=MRfsAEsSVSSBYQmxuFfZs9MoETTvHG4hR5pfgPcsx6k%3d&risl=&pid=ImgRaw&r=0" alt="contact img" className="h-12 w-12 mb-1 rounded transition-transform duration-200" />
                 <span className="text-sm">contato</span>
               </button>
             </div>
