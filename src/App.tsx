@@ -1,12 +1,24 @@
 import { useState, useRef } from "react";
+import about from '../public/about_3697.png'
+import contact from '../public/contacts.png'
+import github from '../public/github.png'
+import insta from '../public/insta.png'
+import link from '../public/link.png'
+import linkedin from '../public/linkedin.png'
+import twitter from '../public/twitter.png'
+
 
 const windowContents = {
   sobre: {
     title: "Sobre",
     content: (
       <div>
-        <h2 className="text-xl font-semibold mb-2">Sobre mim</h2>
-        <p className="text-gray-700">Sou Luiz Eduardo, desenvolvedor e ilustrador apaixonado por tecnologia e arte.</p>
+        <h2 className="text-2xl font-bold mb-2 ">Sobre mim</h2>
+        <p className="text-gray-700">olá, sou Luiz,</p>
+        <p className="text-gray-700">desenvolvedor Full-stack em formação e
+ilustrador ocasionalmente</p>
+        <h2 className="font-semibold text-xl">Proficiência linguística</h2>
+        <p className="text-gray-700">Português nativo <br /> Inglês avançado <br /> Espanhol intermediário</p>
       </div>
     ),
   },
@@ -16,11 +28,19 @@ const windowContents = {
       <div>
         <div className="flex justify-center gap-8">
           <a href="#" className="flex flex-col items-center transform hover:scale-110 duration-200">
-            <img src="https://yt3.googleusercontent.com/PKRBxhCiGa8Y0vPmHa1E2cdjpLhUq2Pl-gESwP7kk2plGgxLdsbjyTd9VjcJwBMiY0HQ8bvx5Q=s900-c-k-c0x00ffffff-no-rj" alt="github img" className="h-16 w-16 mb-2 transition-transform duration-200" />
+            <img src={insta} alt="github img" className="h-16 w-16 mb-2 transition-transform duration-200" />
+            <span className="text-base ">Instagram</span>
+          </a>
+          <a href="#" className="flex flex-col items-center transform hover:scale-110 duration-200">
+            <img src={twitter} alt="github img" className="h-16 w-16 mb-2 transition-transform duration-200" />
+            <span className="text-base ">Twitter</span>
+          </a>
+          <a href="#" className="flex flex-col items-center transform hover:scale-110 duration-200">
+            <img src={github} alt="github img" className="h-16 w-16 mb-2 transition-transform duration-200" />
             <span className="text-base ">GitHub</span>
           </a>
           <a href="#" className="flex flex-col items-center transform hover:scale-110 duration-200">
-            <img src="https://static.vecteezy.com/system/resources/previews/018/930/585/non_2x/linkedin-logo-linkedin-icon-transparent-free-png.png" alt="linkedin img" className="h-16 w-16 mb-2  transition-transform duration-200" />
+            <img src={linkedin} alt="linkedin img" className="h-16 w-16 mb-2  transition-transform duration-200" />
             <span className="text-base ">LinkedIn</span>
           </a>
         </div>
@@ -136,19 +156,26 @@ function App() {
         {/* Conteúdo */}
         <div className="p-6 bg-white border-2 border-gray-600 rounded-b-lg">
           <div className="text-center">
-            <h1 className="text-3xl text-gray-800 mb-4 font-bold">Olá, sou Luiz Eduardo</h1>
+            <div className="flex justify-center items-center gap-2">
+              <h1 className="text-3xl text-gray-800 font-semibold">
+                Olá,
+              </h1>
+              <h1 className="text-4xl text-[#0c4dda] font-bold">
+                sou Luiz Eduardo
+              </h1>
+            </div>
             <p className="text-xl text-gray-600 mb-8">desenvolvedor e ilustrador</p>
             <div className="flex justify-center space-x-8">
               <button className="flex flex-col items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors w-24 transform hover:scale-110 duration-200" onClick={() => openWindow('sobre')}>
-                <img src="https://images.icon-icons.com/37/PNG/512/about_3697.png" alt="sobre img" className="h-12 w-12 mb-1 transition-transform duration-200" />
+                <img src={about} alt="sobre img" className="h-12 w-12 mb-1 transition-transform duration-200" />
                 <span className="text-sm">sobre</span>
               </button>
               <button className="flex flex-col items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors w-24 transform hover:scale-110 duration-200" onClick={() => openWindow('links')}>
-                <img src="https://cdn-icons-png.flaticon.com/512/7046/7046086.png" alt="links img" className="h-12 w-12 mb-1 rounded transition-transform duration-200" />
+                <img src={link} alt="links img" className="h-12 w-12 mb-1 rounded transition-transform duration-200" />
                 <span className="text-sm">links</span>
               </button>
               <button className="flex flex-col items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors w-24 transform hover:scale-110 duration-200" onClick={() => openWindow('contato')}>
-                <img src="https://th.bing.com/th/id/R.3ea5d09ed6d30dbf6f1f4871e5e4c788?rik=eup%2fip%2b%2bPb5cTA&riu=http%3a%2f%2fwww.iconninja.com%2ffiles%2f251%2f835%2f636%2fblack-email-icon.png&ehk=MRfsAEsSVSSBYQmxuFfZs9MoETTvHG4hR5pfgPcsx6k%3d&risl=&pid=ImgRaw&r=0" alt="contact img" className="h-12 w-12 mb-1 rounded transition-transform duration-200" />
+                <img src={contact} alt="contact img" className="h-12 w-12 mb-1 rounded transition-transform duration-200" />
                 <span className="text-sm">contato</span>
               </button>
             </div>
