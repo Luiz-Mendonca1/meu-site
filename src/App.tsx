@@ -1,11 +1,9 @@
 import { useState, useRef } from "react";
-import about from '../public/about_3697.png'
+import about from '../public/about.png'
 import contact from '../public/contacts.png'
 import github from '../public/github.png'
-import insta from '../public/insta.png'
 import link from '../public/link.png'
 import linkedin from '../public/linkedin.png'
-import twitter from '../public/twitter.png'
 
 
 const windowContents = {
@@ -15,8 +13,7 @@ const windowContents = {
       <div>
         <h2 className="text-2xl font-bold mb-2 ">Sobre mim</h2>
         <p className="text-gray-700">olá, sou Luiz,</p>
-        <p className="text-gray-700">desenvolvedor Full-stack em formação e
-ilustrador ocasionalmente</p>
+        <p className="text-gray-700">desenvolvedor Full-stack em formação</p>
         <h2 className="font-semibold text-xl">Proficiência linguística</h2>
         <p className="text-gray-700">Português nativo <br /> Inglês avançado <br /> Espanhol intermediário</p>
       </div>
@@ -27,19 +24,11 @@ ilustrador ocasionalmente</p>
     content: (
       <div>
         <div className="flex justify-center gap-8">
-          <a href="#" className="flex flex-col items-center transform hover:scale-110 duration-200">
-            <img src={insta} alt="github img" className="h-16 w-16 mb-2 transition-transform duration-200" />
-            <span className="text-base ">Instagram</span>
-          </a>
-          <a href="#" className="flex flex-col items-center transform hover:scale-110 duration-200">
-            <img src={twitter} alt="github img" className="h-16 w-16 mb-2 transition-transform duration-200" />
-            <span className="text-base ">Twitter</span>
-          </a>
-          <a href="#" className="flex flex-col items-center transform hover:scale-110 duration-200">
+          <a href="https://github.com/Luiz-Mendonca1" className="flex flex-col items-center transform hover:scale-110 duration-200" target="_blank">
             <img src={github} alt="github img" className="h-16 w-16 mb-2 transition-transform duration-200" />
             <span className="text-base ">GitHub</span>
           </a>
-          <a href="#" className="flex flex-col items-center transform hover:scale-110 duration-200">
+          <a href="https://www.linkedin.com/in/luizeduardomendonca/" className="flex flex-col items-center transform hover:scale-110 duration-200" target="_blank">
             <img src={linkedin} alt="linkedin img" className="h-16 w-16 mb-2  transition-transform duration-200" />
             <span className="text-base ">LinkedIn</span>
           </a>
@@ -164,7 +153,7 @@ function App() {
                 sou Luiz Eduardo
               </h1>
             </div>
-            <p className="text-xl text-gray-600 mb-8">desenvolvedor e ilustrador</p>
+            <p className="text-xl text-gray-600 mb-8">desenvolvedor</p>
             <div className="flex justify-center space-x-8">
               <button className="flex flex-col items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors w-24 transform hover:scale-110 duration-200" onClick={() => openWindow('sobre')}>
                 <img src={about} alt="sobre img" className="h-12 w-12 mb-1 transition-transform duration-200" />
