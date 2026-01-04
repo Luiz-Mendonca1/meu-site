@@ -1,9 +1,77 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import about from '../public/about.png'
 import contact from '../public/contacts.png'
 import github from '../public/github.png'
 import link from '../public/link.png'
 import linkedin from '../public/linkedin.png'
+
+// Interface para tipar os dados do repositório
+type Repo = {
+  id: number;
+  name: string;
+  description: string;
+  html_url: string;
+};
+
+// Componente dedicado para o conteúdo de Links que consome a API
+function LinksContent() {
+  const [repos, setRepos] = useState<Repo[]>([]);
+
+  useEffect(() => {
+    // ALTERAÇÃO AQUI: mudamos 'sort=created' para 'sort=updated'
+    fetch('https://api.github.com/users/Luiz-Mendonca1/repos?sort=updated&per_page=4')
+      .then(response => response.json())
+      .then(data => setRepos(data))
+      .catch(error => console.error("Erro ao buscar repositórios:", error));
+  }, []);
+
+  return (
+    <div>
+      {/* Ícones Sociais */}
+      <div className="flex justify-center gap-8 mb-6">
+        <a href="https://github.com/Luiz-Mendonca1" className="flex flex-col items-center transform hover:scale-110 duration-200" target="_blank">
+          <img src={github} alt="github img" className="h-16 w-16 mb-2 transition-transform duration-200" />
+          <span className="text-base">GitHub</span>
+        </a>
+        <a href="https://www.linkedin.com/in/luizeduardomendonca/" className="flex flex-col items-center transform hover:scale-110 duration-200" target="_blank">
+          <img src={linkedin} alt="linkedin img" className="h-16 w-16 mb-2 transition-transform duration-200" />
+          <span className="text-base">LinkedIn</span>
+        </a>
+      </div>
+
+      {/* Lista Dinâmica de Repositórios */}
+      <div>
+        <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3 text-center">
+          Atualizados Recentemente
+        </h3>
+        <div className="space-y-2 max-h-[200px] overflow-y-auto pr-1 custom-scrollbar">
+          {repos.length > 0 ? (
+            repos.map((repo) => (
+              <a 
+                key={repo.id}
+                href={repo.html_url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block p-3 bg-gray-50 hover:bg-blue-50 hover:border-blue-300AQ border border-gray-200 rounded-lg transition-all duration-200 group"
+              >
+                <div className="flex justify-between items-center mb-1">
+                  <span className="font-semibold text-blue-600 group-hover:text-blue-700 text-sm truncate">
+                    {repo.name}
+                  </span>
+                </div>
+                <p className="text-xs text-gray-500 line-clamp-2">
+                  {repo.description || "Sem descrição disponível."}
+                </p>
+              </a>
+            ))
+          ) : (
+            <p className="text-center text-xs text-gray-400 animate-pulse">Carregando repositórios...</p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const windowContents = {
   sobre: {
@@ -80,20 +148,7 @@ const windowContents = {
   },
   links: {
     title: "Links",
-    content: (
-      <div>
-        <div className="flex justify-center gap-8">
-          <a href="https://github.com/Luiz-Mendonca1" className="flex flex-col items-center transform hover:scale-110 duration-200" target="_blank">
-            <img src={github} alt="github img" className="h-16 w-16 mb-2 transition-transform duration-200" />
-            <span className="text-base ">GitHub</span>
-          </a>
-          <a href="https://www.linkedin.com/in/luizeduardomendonca/" className="flex flex-col items-center transform hover:scale-110 duration-200" target="_blank">
-            <img src={linkedin} alt="linkedin img" className="h-16 w-16 mb-2  transition-transform duration-200" />
-            <span className="text-base ">LinkedIn</span>
-          </a>
-        </div>
-      </div>
-    ),
+    content: <LinksContent />, // Usando o componente aqui
   },
   contato: {
     title: "Contato",
