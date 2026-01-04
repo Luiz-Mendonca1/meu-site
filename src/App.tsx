@@ -5,17 +5,76 @@ import github from '../public/github.png'
 import link from '../public/link.png'
 import linkedin from '../public/linkedin.png'
 
-
 const windowContents = {
   sobre: {
     title: "Sobre",
     content: (
-      <div>
-        <h2 className="text-2xl font-bold mb-2 ">Sobre mim</h2>
-        <p className="text-gray-700">olá, sou Luiz,</p>
-        <p className="text-gray-700">desenvolvedor Full-stack em formação</p>
-        <h2 className="font-semibold text-xl">Proficiência linguística</h2>
-        <p className="text-gray-700">Português nativo <br /> Inglês avançado <br /> Espanhol intermediário</p>
+      <div className="space-y-6">
+        {/* Cabeçalho com Foto e Nome */}
+        <div className="flex items-center gap-4 border-b border-gray-200 pb-4">
+          <img 
+            src="https://github.com/Luiz-Mendonca1.png" 
+            alt="Foto de Perfil Luiz Eduardo" 
+            className="w-20 h-20 rounded-full border-4 border-white shadow-md object-cover bg-gray-100" 
+          />
+          <div>
+            <h1 className="text-2xl font-bold text-gray-800 leading-tight">Luiz Eduardo</h1>
+            <p className="text-xs font-medium  uppercase tracking-wide mt-1">
+              Engenharia de Software - Unifan
+            </p>
+          </div>
+        </div>
+
+        {/* Texto de Apresentação */}
+        <div className="text-gray-600 text-sm leading-relaxed">
+          <p className="mb-3">
+            Desenvolvedor <strong>Full-stack</strong> em formação. Projetos dos mais variados tipos, pode obeservalos no meu <a className="text-blue-600" href="https://github.com/Luiz-Mendonca1" target="_blank">GitHub</a>.
+          </p>
+          <p className="text-gray-500 text-xs italic">
+            Interessado em colaborar? Me chame no LinkedIn ou GitHub.
+          </p>
+        </div>
+
+        {/* Seção de Idiomas Estilizada */}
+        <div className="bg-gray-50 rounded-xl p-4 border border-gray-100 shadow-sm">
+          <h2 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+            Proficiência Linguística
+          </h2>
+          <div className="space-y-2">
+            
+            <div className="flex justify-between items-center group">
+              <span className="flex items-center gap-2 text-sm text-gray-700 font-medium">
+                <span className="text-lg">🇧🇷</span> Português
+              </span>
+              <span className="text-[10px] font-bold">
+                Nativo
+              </span>
+            </div>
+
+            <div className="w-full h-px bg-gray-200/50"></div>
+
+            <div className="flex justify-between items-center group">
+              <span className="flex items-center gap-2 text-sm text-gray-700 font-medium">
+                <span className="text-lg">🇺🇸</span> Inglês
+              </span>
+              <span className="text-[10px] font-bold">
+                Avançado
+              </span>
+            </div>
+
+            <div className="w-full h-px bg-gray-200/50"></div>
+
+            <div className="flex justify-between items-center group">
+              <span className="flex items-center gap-2 text-sm text-gray-700 font-medium">
+                <span className="text-lg">🇲🇽</span> Espanhol
+              </span>
+              <span className="text-[10px] font-bold">
+                Intermediário
+              </span>
+            </div>
+
+          </div>
+        </div>
       </div>
     ),
   },
@@ -115,8 +174,8 @@ function App() {
 
   const openWindow = (type: WindowType) => {
     const id = Date.now() + Math.random();
-    const width = 360; // approximate
-    const height = 220; // approximate
+    const width = 360; 
+    const height = 220; 
     const left = typeof window !== 'undefined' ? Math.max(20, Math.floor(window.innerWidth / 2 - width / 2 + (windows.length * 20) % 200)) : 100;
     const top = typeof window !== 'undefined' ? Math.max(20, Math.floor(window.innerHeight / 2 - height / 2 + (windows.length * 20) % 200)) : 100;
     zRef.current += 1;
@@ -134,16 +193,14 @@ function App() {
 
   return (
     <div className="min-h-screen bg-[url('https://d7hftxdivxxvm.cloudfront.net/?height=630&quality=80&resize_to=fill&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2F2P6t_Yt6dF0TNN76dlp-_Q%252F3417757448_4a6bdf36ce_o.jpg&width=1200')] h-screen bg-cover bg-center flex items-center justify-center p-4 relative">
-      <div className="w-full max-w-2xl">
-        {/* Barra de título */}
-        <div className="flex items-center justify-between bg-gray-700 px-4 py-2  border-gray-600 rounded-t-lg">
+      <div className="w-full max-w-lg aspect-[4/3] flex flex-col shadow-2xl">
+        <div className="flex items-center justify-between bg-gray-700 px-4 py-2 border-gray-600 rounded-t-lg shrink-0">
           <div className="flex items-center space-x-2">
             <span className="ml-2 text-white font-semibold">home</span>
           </div>
         </div>
 
-        {/* Conteúdo */}
-        <div className="p-6 bg-white border-2 border-gray-600 rounded-b-lg">
+        <div className="p-6 bg-white border-2 border-gray-600 rounded-b-lg flex-1 flex flex-col justify-center">
           <div className="text-center">
             <div className="flex justify-center items-center gap-2">
               <h1 className="text-3xl text-gray-800 font-semibold">
@@ -172,7 +229,6 @@ function App() {
         </div>
       </div>
 
-      {/* Janelas abertas */}
       {windows.map((w) => (
         <Window
           key={w.id}
