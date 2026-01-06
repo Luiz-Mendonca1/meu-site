@@ -38,7 +38,7 @@ function ProjectsContent() {
               href={repo.html_url} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="block p-3 bg-gray-50 hover:bg-blue-50 hover:border-blue-300AQ border border-gray-200 rounded-lg transition-all duration-200 group"
+              className="block p-3 bg-gray-50 hover:bg-blue-50 hover:border-blue-300 border border-gray-200HW rounded-lg transition-all duration-200 group"
             >
               <div className="flex justify-between items-center mb-1">
                 <span className="font-semibold text-blue-600 group-hover:text-blue-700 text-sm truncate">
@@ -84,25 +84,25 @@ const windowContents = {
     title: "Sobre",
     content: (
       <div className="space-y-6">
-        {/* Cabeçalho com Foto e Nome */}
-        <div className="flex items-center gap-4 border-b border-gray-200 pb-4">
+        {/* Cabeçalho com Foto e Nome - Responsivo: Coluna no mobile, Linha no desktop */}
+        <div className="flex flex-col sm:flex-row items-center gap-4 border-b border-gray-200yb pb-4 text-center sm:text-left">
           <img 
             src="https://github.com/Luiz-Mendonca1.png" 
             alt="Foto de Perfil Luiz Eduardo" 
-            className="w-20 h-20 rounded-full border-4 border-white shadow-md object-cover bg-gray-100" 
+            className="w-20 h-20 rounded-fullnD border-4 border-white shadow-md object-cover bg-gray-100" 
           />
           <div>
             <h1 className="text-2xl font-bold text-gray-800 leading-tight">Luiz Eduardo</h1>
-            <p className="text-xs font-medium  uppercase tracking-wide mt-1">
+            <p className="text-xs font-medium uppercase tracking-wide mt-1">
               Engenharia de Software - Unifan
             </p>
           </div>
         </div>
 
         {/* Texto de Apresentação */}
-        <div className="text-gray-600 text-sm leading-relaxed">
+        <div className="text-gray-600 text-sm leading-relaxed text-center sm:text-left">
           <p className="mb-3">
-            Desenvolvedor <strong>Full-stack</strong> em formação. Projetos dos mais variados tipos, pode obeservalos no meu <a className="text-blue-600" href="https://github.com/Luiz-Mendonca1" target="_blank">GitHub</a>.
+            Desenvolvedor <strong>Full-stack</strong> em formação. Projetos dos mais variados tipos, pode observá-los no meu <a className="text-blue-600 font-semibold hover:underline" href="https://github.com/Luiz-Mendonca1" target="_blank">GitHub</a>.
           </p>
           <p className="text-gray-500 text-xs italic">
             Interessado em colaborar? Me chame no LinkedIn ou GitHub.
@@ -111,7 +111,7 @@ const windowContents = {
 
         {/* Seção de Idiomas Estilizada */}
         <div className="bg-gray-50 rounded-xl p-4 border border-gray-100 shadow-sm">
-          <h2 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+          <h2 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-2 justify-center sm:justify-start">
             Proficiência Linguística
           </h2>
           <div className="space-y-2">
@@ -238,20 +238,22 @@ function Window({ id, title, children, x, y, z, onClose, onMove, onBringToFront 
 
   return (
     <div
-      className="fixed w-full max-w-md bg-white rounded-lg shadow-2xl border-2 border-gray-600"
+      // Responsivo: w-[90vw] no mobile, sm:w-[24rem] no desktop (aprox 384px)
+      className="fixed w-[90vw] sm:w-[24rem] bg-white rounded-lg shadow-2xl border-2 border-gray-600"
       style={{ left: x, top: y, zIndex: z }}
       onMouseDown={() => onBringToFront(id)}
     >
-      <div className="flex items-center justify-between bg-gray-700 px-4 py-2 border-b border-gray-600 " onPointerDown={onPointerDown}>
-        <span className="text-white font-semibold">{title}</span>
-        <button className="text-gray-300 hover:text-white" onClick={() => onClose(id)}>✕</button>
+      {/* touch-none previne rolagem da página ao arrastar a janela em telas touch */}
+      <div className="flex items-center justify-between bg-gray-700 px-4 py-2 border-b border-gray-600 touch-none cursor-move" onPointerDown={onPointerDown}>
+        <span className="text-white font-semibold truncate mr-2">{title}</span>
+        <button className="text-gray-300 hover:text-white px-2" onClick={() => onClose(id)}>✕</button>
       </div>
-      <div className="p-6">{children}</div>
+      <div className="p-4 sm:p-6 max-h-[70vh] overflow-y-auto custom-scrollbar">{children}</div>
     </div>
   );
 }
 
-type WindowType = 'sobre' | 'links' | 'projetos'; // Tipo atualizado
+type WindowType = 'sobre' | 'links' | 'projetos';
 type WindowItem = { type: WindowType; id: number; x: number; y: number; z: number };
 
 function App() {
@@ -265,10 +267,27 @@ function App() {
 
   const openWindow = (type: WindowType) => {
     const id = Date.now() + Math.random();
-    const width = 360; 
-    const height = 220; 
-    const left = typeof window !== 'undefined' ? Math.max(20, Math.floor(window.innerWidth / 2 - width / 2 + (windows.length * 20) % 200)) : 100;
-    const top = typeof window !== 'undefined' ? Math.max(20, Math.floor(window.innerHeight / 2 - height / 2 + (windows.length * 20) % 200)) : 100;
+    
+    // Cálculo responsivo da largura da janela para posicionamento inicial
+    const isMobile = typeof window !== 'undefined' ? window.innerWidth < 640 : false;
+    const width = isMobile ? window.innerWidth * 0.9 : 384; // 384px = 24rem
+    const height = 220;
+    
+    // Garante que a janela abra dentro dos limites da tela
+    const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1000;
+    const screenHeight = typeof window !== 'undefined' ? window.innerHeight : 800;
+
+    // Centraliza inicialmente
+    let left = Math.max(10, Math.floor(screenWidth / 2 - width / 2));
+    let top = Math.max(10, Math.floor(screenHeight / 2 - height / 2));
+
+    // Adiciona um pequeno offset para janelas múltiplas (menor no mobile)
+    const offset = isMobile ? (windows.length * 10) % 30 : (windows.length * 20) % 200;
+    
+    // Ajusta para não sair da tela
+    left = Math.min(left + offset, screenWidth - width - 10);
+    top = Math.min(top + offset, screenHeight - height - 10);
+
     zRef.current += 1;
     const newWindow: WindowItem = { type, id, x: left, y: top, z: zRef.current };
     setWindows((prev) => [...prev, newWindow]);
@@ -283,37 +302,44 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[url('https://d7hftxdivxxvm.cloudfront.net/?height=630&quality=80&resize_to=fill&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2F2P6t_Yt6dF0TNN76dlp-_Q%252F3417757448_4a6bdf36ce_o.jpg&width=1200')] h-screen bg-cover bg-center flex items-center justify-center p-4 relative">
-      <div className="w-full max-w-lg aspect-[4/3] flex flex-col shadow-2xl">
+    <div className="min-h-screen bg-[url('https://d7hftxdivxxvm.cloudfront.net/?height=630&quality=80&resize_to=fill&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2F2P6t_Yt6dF0TNN76dlp-_Q%252F3417757448_4a6bdf36ce_o.jpg&width=1200')] h-screen bg-cover bg-center flex items-center justify-center p-4 relative overflow-hidden">
+      
+      {/* Container Principal: Responsivo (w-full no mobile, aspect ratio no desktop) */}
+      <div className="w-[95%] max-w-lg md:w-full md:aspect-[4/3] flex flex-col shadow-2xl h-auto transition-all duration-300">
+        
+        {/* Barra de Título */}
         <div className="flex items-center justify-between bg-gray-700 px-4 py-2 border-gray-600 rounded-t-lg shrink-0">
           <div className="flex items-center space-x-2">
             <span className="ml-2 text-white font-semibold">home</span>
           </div>
         </div>
 
-        <div className="p-6 bg-white border-2 border-gray-600 rounded-b-lg flex-1 flex flex-col justify-center">
+        {/* Conteúdo Principal */}
+        <div className="p-6 sm:p-8 bg-white border-2 border-gray-600 rounded-b-lg flex-1 flex flex-col justify-center min-h-[300px]">
           <div className="text-center">
-            <div className="flex justify-center items-center gap-2">
-              <h1 className="text-3xl text-gray-800 font-semibold">
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-1 sm:gap-2 mb-2">
+              <h1 className="text-2xl sm:text-3xl text-gray-800 font-semibold">
                 Olá,
               </h1>
-              <h1 className="text-4xl text-[#0c4dda] font-bold">
+              <h1 className="text-3xl sm:text-4xl text-[#0c4dda] font-bold">
                 sou Luiz Eduardo
               </h1>
             </div>
-            <p className="text-xl text-gray-600 mb-8">desenvolvedor</p>
-            <div className="flex justify-center space-x-8">
-              <button className="flex flex-col items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors w-24 transform hover:scale-110 duration-200" onClick={() => openWindow('sobre')}>
-                <img src={about} alt="sobre img" className="h-12 w-12 mb-1 transition-transform duration-200" />
-                <span className="text-sm">sobre</span>
+            <p className="text-lg sm:text-xl text-gray-600 mb-6 sm:mb-8">desenvolvedor</p>
+            
+            {/* Botões */}
+            <div className="flex flex-wrap justify-center gap-4 sm:gap-8">
+              <button className="flex flex-col items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors w-20 sm:w-24 transform hover:scale-110 duration-200 active:scale-95" onClick={() => openWindow('sobre')}>
+                <img src={about} alt="sobre img" className="h-10 w-10 sm:h-12 sm:w-12 mb-1 transition-transform duration-200" />
+                <span className="text-xs sm:text-sm">sobre</span>
               </button>
-              <button className="flex flex-col items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors w-24 transform hover:scale-110 duration-200" onClick={() => openWindow('links')}>
-                <img src={link} alt="links img" className="h-12 w-12 mb-1 rounded transition-transform duration-200" />
-                <span className="text-sm">links</span>
+              <button className="flex flex-col items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors w-20 sm:w-24 transform hover:scale-110 duration-200 active:scale-95" onClick={() => openWindow('links')}>
+                <img src={link} alt="links img" className="h-10 w-10 sm:h-12 sm:w-12 mb-1 rounded transition-transform duration-200" />
+                <span className="text-xs sm:text-sm">links</span>
               </button>
-              <button className="flex flex-col items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors w-24 transform hover:scale-110 duration-200" onClick={() => openWindow('projetos')}>
-                <img src={projetos} alt="project img" className="h-12 w-12 mb-1 rounded transition-transform duration-200" />
-                <span className="text-sm">projetos</span>
+              <button className="flex flex-col items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors w-20 sm:w-24 transform hover:scale-110 duration-200 active:scale-95" onClick={() => openWindow('projetos')}>
+                <img src={projetos} alt="project img" className="h-10 w-10 sm:h-12 sm:w-12 mb-1 rounded transition-transform duration-200" />
+                <span className="text-xs sm:text-sm">projetos</span>
               </button>
             </div>
           </div>
