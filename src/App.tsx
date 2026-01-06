@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import about from '../public/about.png'
-import contact from '../public/contacts.png'
+import projetos from '../public/projetos.png'
 import github from '../public/github.png'
 import link from '../public/link.png'
 import linkedin from '../public/linkedin.png'
@@ -13,12 +13,12 @@ type Repo = {
   html_url: string;
 };
 
-// Componente dedicado para o conteúdo de Links que consome a API
-function LinksContent() {
+// Componente para a lista de projetos (Repositórios)
+function ProjectsContent() {
   const [repos, setRepos] = useState<Repo[]>([]);
 
   useEffect(() => {
-    // ALTERAÇÃO AQUI: mudamos 'sort=created' para 'sort=updated'
+    // Busca repositórios ordenados por atualização
     fetch('https://api.github.com/users/Luiz-Mendonca1/repos?sort=updated&per_page=4')
       .then(response => response.json())
       .then(data => setRepos(data))
@@ -27,49 +27,55 @@ function LinksContent() {
 
   return (
     <div>
-      {/* Ícones Sociais */}
-      <div className="flex justify-center gap-8 mb-6">
-        <a href="https://github.com/Luiz-Mendonca1" className="flex flex-col items-center transform hover:scale-110 duration-200" target="_blank">
-          <img src={github} alt="github img" className="h-16 w-16 mb-2 transition-transform duration-200" />
-          <span className="text-base">GitHub</span>
-        </a>
-        <a href="https://www.linkedin.com/in/luizeduardomendonca/" className="flex flex-col items-center transform hover:scale-110 duration-200" target="_blank">
-          <img src={linkedin} alt="linkedin img" className="h-16 w-16 mb-2 transition-transform duration-200" />
-          <span className="text-base">LinkedIn</span>
-        </a>
-      </div>
-
-      {/* Lista Dinâmica de Repositórios */}
-      <div>
-        <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3 text-center">
-          Atualizados Recentemente
-        </h3>
-        <div className="space-y-2 max-h-[200px] overflow-y-auto pr-1 custom-scrollbar">
-          {repos.length > 0 ? (
-            repos.map((repo) => (
-              <a 
-                key={repo.id}
-                href={repo.html_url} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="block p-3 bg-gray-50 hover:bg-blue-50 hover:border-blue-300AQ border border-gray-200 rounded-lg transition-all duration-200 group"
-              >
-                <div className="flex justify-between items-center mb-1">
-                  <span className="font-semibold text-blue-600 group-hover:text-blue-700 text-sm truncate">
-                    {repo.name}
-                  </span>
-                </div>
-                <p className="text-xs text-gray-500 line-clamp-2">
-                  {repo.description || "Sem descrição disponível."}
-                </p>
-              </a>
-            ))
-          ) : (
-            <p className="text-center text-xs text-gray-400 animate-pulse">Carregando repositórios...</p>
-          )}
-        </div>
+      <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3 text-center">
+        Atualizados Recentemente
+      </h3>
+      <div className="space-y-2 max-h-[200px] overflow-y-auto pr-1 custom-scrollbar">
+        {repos.length > 0 ? (
+          repos.map((repo) => (
+            <a 
+              key={repo.id}
+              href={repo.html_url} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="block p-3 bg-gray-50 hover:bg-blue-50 hover:border-blue-300AQ border border-gray-200 rounded-lg transition-all duration-200 group"
+            >
+              <div className="flex justify-between items-center mb-1">
+                <span className="font-semibold text-blue-600 group-hover:text-blue-700 text-sm truncate">
+                  {repo.name}
+                </span>
+              </div>
+              <p className="text-xs text-gray-500 line-clamp-2">
+                {repo.description || "Sem descrição disponível."}
+              </p>
+            </a>
+          ))
+        ) : (
+          <p className="text-center text-xs text-gray-400 animate-pulse">Carregando repositórios...</p>
+        )}
       </div>
     </div>
+  );
+}
+
+// Componente dedicado apenas para os Links Sociais
+function LinksContent() {
+  return (
+    <>
+    <div className="flex justify-center gap-8 py-4">
+      <a href="https://github.com/Luiz-Mendonca1" className="flex flex-col items-center transform hover:scale-110 duration-200" target="_blank">
+        <img src={github} alt="github img" className="h-16 w-16 mb-2 transition-transform duration-200" />
+        <span className="text-base">GitHub</span>
+      </a>
+      <a href="https://www.linkedin.com/in/luizeduardomendonca/" className="flex flex-col items-center transform hover:scale-110 duration-200" target="_blank">
+        <img src={linkedin} alt="linkedin img" className="h-16 w-16 mb-2 transition-transform duration-200" />
+        <span className="text-base">LinkedIn</span>
+      </a>
+    </div>
+    <div className=" border-1 border-gray-400" >
+      <p className="m-1 text-sm text-gray-500 text-center">ao clicar em qualquer link será aberto em uma nova janela</p>
+    </div>
+    </>
   );
 }
 
@@ -148,16 +154,11 @@ const windowContents = {
   },
   links: {
     title: "Links",
-    content: <LinksContent />, // Usando o componente aqui
+    content: <LinksContent />,
   },
-  contato: {
-    title: "Contato",
-    content: (
-      <div>
-        <h2 className="text-xl font-semibold mb-2">Contato</h2>
-        <p className="text-gray-700">Email: luiz@email.com<br/>WhatsApp: (99) 99999-9999</p>
-      </div>
-    ),
+  projetos: { // Alterado de contato para projetos
+    title: "Projetos",
+    content: <ProjectsContent />, // Conteúdo transferido de Links para cá
   },
 };
 
@@ -215,7 +216,7 @@ function Window({ id, title, children, x, y, z, onClose, onMove, onBringToFront 
   );
 }
 
-type WindowType = 'sobre' | 'links' | 'contato';
+type WindowType = 'sobre' | 'links' | 'projetos'; // Tipo atualizado
 type WindowItem = { type: WindowType; id: number; x: number; y: number; z: number };
 
 function App() {
@@ -275,9 +276,9 @@ function App() {
                 <img src={link} alt="links img" className="h-12 w-12 mb-1 rounded transition-transform duration-200" />
                 <span className="text-sm">links</span>
               </button>
-              <button className="flex flex-col items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors w-24 transform hover:scale-110 duration-200" onClick={() => openWindow('contato')}>
-                <img src={contact} alt="contact img" className="h-12 w-12 mb-1 rounded transition-transform duration-200" />
-                <span className="text-sm">contato</span>
+              <button className="flex flex-col items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors w-24 transform hover:scale-110 duration-200" onClick={() => openWindow('projetos')}>
+                <img src={projetos} alt="project img" className="h-12 w-12 mb-1 rounded transition-transform duration-200" />
+                <span className="text-sm">projetos</span>
               </button>
             </div>
           </div>
