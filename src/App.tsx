@@ -28,7 +28,7 @@ function ProjectsContent() {
   return (
     <div>
       <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3 text-center">
-        Atualizados Recentemente
+        Repositórios Atualizados Recentemente
       </h3>
       <div className="space-y-2 max-h-[200px] overflow-y-auto pr-1 custom-scrollbar">
         {repos.length > 0 ? (
@@ -156,9 +156,44 @@ const windowContents = {
     title: "Links",
     content: <LinksContent />,
   },
-  projetos: { // Alterado de contato para projetos
+  projetos: {
     title: "Projetos",
-    content: <ProjectsContent />, // Conteúdo transferido de Links para cá
+    content: (
+      <div className="space-y-4">
+        {/* Seção de Tecnologias */}
+        <div>
+          <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3 text-center">
+            Desenvolvo com
+          </h2>
+          <div className="flex flex-wrap justify-center gap-2">
+            {[
+              "JavaScript", "TypeScript", "React", "Node.js", 
+              "Python", "Java", "C++", "C", 
+              "MySQL", "SQL", "TailwindCSS", "HTML/CSS"
+            ].map((tech) => (
+              <span 
+                key={tech} 
+                className="px-2 py-1 bg-gray-100 text-gray-700 text-[10px] font-medium rounded-md border border-gray-200 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 transition-colors cursor-default"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="w-full h-px bg-gray-200/50"></div>
+
+        {/* Componente de Projetos do GitHub */}
+        <ProjectsContent />
+
+        {/* Rodapé com Links Extras */}
+        <div className="text-center text-xs text-gray-500 space-y-1 pt-2 border-t border-gray-100">
+          <p>
+            mais repositórios no <a className="text-blue-600 hover:text-blue-800 hover:underline transition-colors" href="https://github.com/Luiz-Mendonca1" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </p>
+        </div>
+      </div>
+    ),
   },
 };
 
